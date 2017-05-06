@@ -33,15 +33,15 @@ function addhex(in_x, in_y, type) {
   	fill: type
   });
 
-  var hex="";
-  hex.x = in_x;
-  hex.y = in_y;
-  hex.type = type;
-  hex.object = hex_obj;
+  // var hex="";
+  // hex.x = in_x;
+  // hex.y = in_y;
+  // hex.type = type;
+  // hex.object = hex_obj;
 
-  add_to_array(hex);
+  //add_to_array(hex);
 
-  canvas.addChild(hex);
+  canvas.addChild(hex_obj);
 
 }
 
