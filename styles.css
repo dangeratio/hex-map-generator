@@ -1,0 +1,66 @@
+
+#iterations {
+  width: 60px;
+}
+
+.plains, .scrub, .forest, .rough, .desert, .hills, .mountains, .marsh {
+  width: 30px;
+}
+
+.plains {background:#ddd254; text-align:center; padding: 15px 10px;}
+.plains:before {content:"P";}
+.scrub {background-color:#afa642; text-align:center; padding: 15px 10px;}
+.scrub:before {content:"S";}
+.forest {background-color:#338e29; text-align:center; padding: 15px 10px;}
+.forest:before {content:"F";}
+.rough {background-color:#8e6429; text-align:center; padding: 15px 10px;}
+.rough:before {content:"R";}
+.desert {background-color:#fcf68d; text-align:center; padding: 15px 10px;}
+.desert:before {content:"D";}
+.hills {background-color:#2f774d; text-align:center; padding: 15px 10px;}
+.hills:before {content:"H";}
+.mountains {background-color:#7e7f7e; text-align:center; padding: 15px 10px;}
+.mountains:before {content:"Mo";}
+.marsh {background-color:#a5d8a0; text-align:center; padding: 15px 10px;}
+.marsh:before {content:"Ma";}
+
+.field {
+  border: 2px solid #4CAF50;
+  border-radius: 4px;
+  color: #4CAF50;
+  padding: 5px 5px;
+  text-align: left;
+  display: inline-block;
+  font-size: 16px;
+  vertical-align: top;
+}
+
+.label {
+  color: #4CAF50;
+  padding: 7px 5px;
+  text-align: left;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+}
+
+.button {
+   background-color: #4CAF50;
+   border-radius: 4px;
+   border: none;
+   color: white;
+   padding: 7px 10px;
+   text-align: center;
+   display: inline-block;
+   font-size: 16px;
+}
+
+.key {
+  border: none;
+}
+
+.key tr td {
+  /*color: #4CAF50;*/
+  padding: 10px;
+  font-size: 16px;
+}
