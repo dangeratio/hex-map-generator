@@ -8,12 +8,29 @@ var canvas = oCanvas.create({
 });
 
 var canvas_array=[];
+var map_type = "random";
+var iterations = 3;
 
 /****************************/
 /*  Map Pieces
 /****************************/
 
-function addhex(in_x, in_y, type) {
+function makeStruct(names) {
+  var names = names.split(' ');
+  var count = names.length;
+  function constructor() {
+    for (var i = 0; i < count; i++) {
+      this[names[i]] = arguments[i];
+    }
+  }
+  return constructor;
+}
+
+var Hex = makeStruct("x y type obj");
+
+function add_hex(in_x, in_y, type) {
+
+	console.log("Adding Hex: ["+in_x+", "+in_y+"]");
 
   if(in_x == ""){in_x = canvas.width / 2;}
   if(in_y == ""){in_y = canvas.height / 2;}
@@ -33,13 +50,10 @@ function addhex(in_x, in_y, type) {
   	fill: type
   });
 
-  // var hex="";
-  // hex.x = in_x;
-  // hex.y = in_y;
-  // hex.type = type;
-  // hex.object = hex_obj;
+	// create obj to send to canvas_array
+	var hex = new Hex(in_x, in_y, type, hex_obj);
 
-  //add_to_array(hex);
+  add_to_array(hex);
 
   canvas.addChild(hex_obj);
 
@@ -49,9 +63,9 @@ function add_to_array(hex) {
   // iterate array to identify if it exists
   var i;
   var replaced=false;
-  for (i=0; i<canvas_array.length; i++){
+  for (var i=0; i<canvas_array.length; i++){
     if((canvas_array[i].x==hex.x)&&(canvas_array[i].y==hex.y)){
-      canvas.removeChild(canvas_array[i]);
+			canvas.removeChild(canvas_array[i].obj);
       canvas_array.splice(i,1);
       replaced=true;
     }
@@ -113,16 +127,52 @@ function getColor(biome){
 // }
 
 // examples
-// addhex(100,100,"green");
-// addhex(150,150,"black");
-// addhex(150+105,150,"black");
-// addhex(150+105+105,150,"black");
-// addhex(150+105+105+105,150,"black");
-// addhex(150+105+105+105+105,150,"black");
-// addhex(150+105,150,"black");
-// addhex(150+105,150,"black");
+// add_hex(100,100,"green");
+// add_hex(150,150,"black");
+// add_hex(150+105,150,"black");
+// add_hex(150+105+105,150,"black");
+// add_hex(150+105+105+105,150,"black");
+// add_hex(150+105+105+105+105,150,"black");
+// add_hex(150+105,150,"black");
+// add_hex(150+105,150,"black");
 
-function drawrandommap() {
+function draw_iterative_map() {
+	draw_initial_board();
+	var middle_hex = get_middle_hex(canvas.width / 2, canvas.height / 2);
+
+	for (var i=0; i<iterations; i++){
+
+		//
+		// identify connected hex
+		// identify new type (based on last and this)
+		// add hex
+	}
+
+
+	// examples
+	remove_hex(middle_hex.obj);
+	add_hex(middle_hex.x,middle_hex.y,"red");
+
+}
+
+function draw_initial_board() {
+	  // default start point
+	  var x = 100;
+	  var y = 100;
+	  var height = 184; //121+60
+	  var cols = 8;
+	  var cols_off_row = 9;
+	  var total_rows = 4;
+		map_type="#c0c0c0";
+
+	  for (a=0; a<=total_rows; a++) {
+	    drawrow(x,y,cols);
+	    draw_off_row(x,y,cols_off_row);
+	    y=y+height;
+	  }
+}
+
+function draw_random_map() {
 
   // default start point
   var x = 100;
@@ -131,12 +181,14 @@ function drawrandommap() {
   var cols = 8;
   var cols_off_row = 9;
   var total_rows = 4;
+	map_type = "random";
 
   for (a=0; a<=total_rows; a++) {
     drawrow(x,y,cols);
     draw_off_row(x,y,cols_off_row);
     y=y+height;
   }
+	// alert(canvas_array.length);
 }
 
 function draw_off_row(x,y,z) {
@@ -146,7 +198,7 @@ function draw_off_row(x,y,z) {
   for (i = 0; i < z; i++) {
     z_new = (z + ((i+1) * 107)) - off;
     y_new = y+ height_off
-    addhex(z_new,y_new,"random");
+    add_hex(z_new,y_new,map_type);
   }
 }
 
@@ -154,13 +206,88 @@ function draw_off_row(x,y,z) {
 function drawrow(x,y,z) {
   for (i = 0; i < z; i++) {
     z_new = z + ((i+1) * 107);
-    addhex(z_new,y,"random");
+    add_hex(z_new,y,map_type);
   }
 }
 
+function remove_hex(hex){
+	// iterate array to identify if it exists
+	console.log("Removing Hex: ["+hex.x+", "+hex.y+"]");
+  var i;
+  var replaced=false;
+  for (i=0; i<canvas_array.length; i++){
+    if((canvas_array[i].x==hex.x)&&(canvas_array[i].y==hex.y)){
+      canvas.removeChild(canvas_array[i].obj);
+      canvas_array.splice(i,1);
+      replaced=true;
+    }
+    if (replaced) break;
+  }
+}
 
+function randomIntFromInterval(min,max) {
+    return Math.floor(Math.random()*(max-min+1)+min);
+}
 
+function pick_random_border_hex(hex) {
+	var near_hexes = get_near_hexes(hex);
+	var number_of_hexes = near_hexes.length;
 
+	if (number > 0) {
+		return near_hexes[randomIntFromInterval(1,number_of_hexes)];
+	} else {
+		return 0;
+	}
+}
+
+function get_near_hexes(hex) {
+	//get closest hex and distance to it
+	var closest_other = get_closest_hex(hex.x, hex.y);
+	var distance = get_distance(hex.x, hex.y, closest_other.x, closest_other.y);
+	// add a little distance to range for slight differences between nearest hexes
+	distance = distance + (distance * 0.05);
+	// iterate all hexes and find all those within the "distance" to nearest, return array of hexes
+	var near_hexes;
+	for (var i=0; i<canvas_array.length; i++) {
+		curr_distance = get_distance(screen_mid_x, screen_mid_y, canvas_array[i].x, canvas_array[i].y);
+		if((curr_distance < distance)&&(curr_distance!=0)) {
+			near_hexes.push(hex);
+		}
+	}
+	return near_hexes;
+}
+
+function get_closest_other_hex(screen_mid_x, screen_mid_y) {
+	var closest_hex=canvas_array[0];
+	var distance=9999;
+	for (var i=0; i<canvas_array.length; i++) {
+		curr_distance = get_distance(screen_mid_x, screen_mid_y, canvas_array[i].x, canvas_array[i].y);
+		if((curr_distance < distance)&&(curr_distance!=0)) {
+			distance = curr_distance;
+			closest_hex = canvas_array[i];
+		}
+	}
+	return closest_hex;
+}
+
+function get_middle_hex(screen_mid_x, screen_mid_y) {
+	var closest_hex=canvas_array[0];
+	var distance=9999;
+	for (var i=0; i<canvas_array.length; i++) {
+		curr_distance = get_distance(screen_mid_x, screen_mid_y, canvas_array[i].x, canvas_array[i].y);
+		if(curr_distance < distance) {
+			distance = curr_distance;
+			closest_hex = canvas_array[i];
+		}
+	}
+	return closest_hex;
+}
+
+function get_distance(x1, y1, x2, y2) {
+	var a = x1 - x2;
+	var b = y1 - y2;
+	return Math.sqrt( a*a + b*b );
+}
 
 
 /****************************/
@@ -175,7 +302,8 @@ var dragOptions = { changeZindex: true };
 canvas.setLoop(function () {
 });
 
-drawrandommap();
+// draw_iterative_map();
+draw_random_map();
 
 // button.bind("click tap", function () {
 // 	if (canvas.timeline.running) {

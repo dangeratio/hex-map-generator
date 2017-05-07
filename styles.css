@@ -24,6 +24,17 @@
 .marsh {background-color:#a5d8a0; text-align:center; padding: 15px 10px;}
 .marsh:before {content:"Ma";}
 
+.radio {
+  border: 2px solid #4CAF50;
+  border-radius: 10px;
+  color: #4CAF50;
+  height: 15px;
+  width: 15px;
+  vertical-align: middle;
+  display: inline-block;
+  margin-right: 10px;
+}
+
 .field {
   border: 2px solid #4CAF50;
   border-radius: 4px;
