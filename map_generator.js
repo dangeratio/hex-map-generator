@@ -9,11 +9,42 @@ var canvas = oCanvas.create({
 
 var canvas_array=[];
 var map_type = "random";
-var iterations = 100;
+var iterations = 100; // this must be larger than the number of hexes, otherwise you wont get them all.  It can be less, but you will only fill out this may hexes. (+1 for the starting hex)
 var debug_messages = true;
 var finished = false;
 var last_type = "";
 var Hex = struct("x y type obj text_obj");
+
+//////////////////////////////////////////////////
+// gygax_table is from page 173 of 1e Dungeon Masters Guide, section titled Appendix B: Random Wilderness Terrain
+//////////////////////////////////////////////////
+// gygax_table format is as follows:
+// L = Last terrain type, 1-20 = Value selected for d20 roll for new terrain type
+// gygax_table[L][1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20]
+// Reference:
+// Plains = 0
+// Scrub = 1
+// Forest = 2
+// Rough = 3
+// Desert = 4
+// Hills = 5
+// Mountains = 6
+// Marsh = 7
+// Pond = 8
+// Depression = 9
+// Note: as the book states, Pond or Depressions are ignored when the next terrain type is rolled for.
+
+var roll_table=[];
+roll_table[0] = [0,0,0,0,0,0,0,0,0,0,0,1,2,3,4,5,6,7,8,9]; // Plains column
+roll_table[1] = [0,0,0,1,1,1,1,1,1,1,1,2,2,3,4,5,6,7,8,9]; // Scrub column
+roll_table[2] = [0,1,1,1,2,2,2,2,2,2,2,2,2,2,3,4,6,7,8,9]; // Forest column
+roll_table[3] = [0,0,1,1,2,3,3,3,4,4,5,5,5,5,5,6,6,7,8,9]; // Rough column
+roll_table[4] = [0,0,0,1,1,3,3,3,4,4,4,4,4,4,5,6,6,7,8,9]; // Desert column
+roll_table[5] = [0,1,1,2,2,3,3,4,5,5,5,5,5,5,6,6,7,8,8,9]; // Hills column
+roll_table[6] = [0,1,2,3,3,4,5,5,5,5,6,6,6,6,6,6,6,6,8,9]; // Mountains column
+roll_table[7] = [0,0,1,1,2,2,3,5,7,7,7,7,7,7,7,8,8,8,8,9]; // Marsh
+
+
 
 /********************************************************/
 /*  PROCESSES
@@ -180,40 +211,11 @@ function add_to_array(hex) {
   canvas_array.push(hex);
 }
 
-//////////////////////////////////////////////////
-// gygax_table is from page 173 of 1e Dungeon Masters Guide, section titled Appendix B: Random Wilderness Terrain
-//////////////////////////////////////////////////
-// gygax_table format is as follows:
-// L = Last terrain type, 1-20 = Value selected for d20 roll for new terrain type
-// gygax_table[L][1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20]
-// Reference:
-// Plains = 0
-// Scrub = 1
-// Forest = 2
-// Rough = 3
-// Desert = 4
-// Hills = 5
-// Mountains = 6
-// Marsh = 7
-// Pond = 8
-// Depression = 9
-// Note: as the book states, Pond or Depressions are ignored when the next terrain type is rolled for.
-
-var roll_table=[];
-roll_table[0] = [0,0,0,0,0,0,0,0,0,0,0,1,2,3,4,5,6,7,8,9]; // Plains column
-roll_table[1] = [0,0,0,1,1,1,1,1,1,1,1,2,2,3,4,5,6,7,8,9]; // Scrub column
-roll_table[2] = [0,1,1,1,2,2,2,2,2,2,2,2,2,2,3,4,6,7,8,9]; // Forest column
-roll_table[3] = [0,0,1,1,2,3,3,3,4,4,5,5,5,5,5,6,6,7,8,9]; // Rough column
-roll_table[4] = [0,0,0,1,1,3,3,3,4,4,4,4,4,4,5,6,6,7,8,9]; // Desert column
-roll_table[5] = [0,1,1,2,2,3,3,4,5,5,5,5,5,5,6,6,7,8,8,9]; // Hills column
-roll_table[6] = [0,1,2,3,3,4,5,5,5,5,6,6,6,6,6,6,6,6,8,9]; // Mountains column
-roll_table[7] = [0,0,1,1,2,2,3,5,7,7,7,7,7,7,7,8,8,8,8,9]; // Marsh
-
 function identify_new_type() {
-	log("Old Type:" + last_type);
+	//log("Old Type:" + last_type);
 	d20 = random_int(1,20); // roll d20 for next land type
 	new_type = roll_table[last_type][d20-1];
-	log("New Type: [New:"+new_type+", Last:"+last_type+", d20:"+d20+"]");
+	//log("New Type: [New:"+new_type+", Last:"+last_type+", d20:"+d20+"]");
 	if((new_type!=8)&&(new_type!=9)) {	// ignore last type for pools and depressions
 		last_type = new_type;
 	}
@@ -235,13 +237,13 @@ function update_color_initial(hex) {
 
 function get_random_type() {
   biome = Math.floor(Math.random() * 10);
-	log("New Type:" + biome);
+	//log("New Type:" + biome);
   return biome;
 }
 
 function get_random_type_first() {
   biome = Math.floor(Math.random() * 8);
-	log("New Type:" + biome);
+	//log("New Type:" + biome);
   return biome;
 }
 
@@ -317,10 +319,10 @@ function get_text(type) {
       return "Marsh"; // marsh
       break;
 		case 8:
-			return "Pond";
+			return "Water"; // Pond, renamed to Water
 			break;
 		case 9:
-			return "Depression";
+			return "Depression"; //Depression
 			break;
 		case "grey":
 			return ""; // default for initial map layout
@@ -333,7 +335,7 @@ function get_text(type) {
 
 function remove_hex(hex){
 	// iterate array to identify if it exists
-	log("Removing Hex: ["+hex.x+", "+hex.y+"]");
+	//log("Removing Hex: ["+hex.x+", "+hex.y+"]");
   var i;
   var replaced=false;
   for (i=0; i<canvas_array.length; i++){
@@ -442,10 +444,13 @@ function log(msg) {
 
 // canvas.addChild(button);
 
-var dragOptions = { changeZindex: true };
+function save_as_image() {
+	var image = canvas.toDataURL("image/png").replace("image/png", "image/octet-stream");  // here is the most important part because if you dont replace you will get a DOM 18 exception.
+	window.location.href=image; // it will save locally
+}
 
-canvas.setLoop(function () {
-});
+var dragOptions = { changeZindex: true };
+canvas.setLoop(function () {});
 
 draw_iterative_map();
 // draw_random_map();
