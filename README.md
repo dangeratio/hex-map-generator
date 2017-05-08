@@ -21,5 +21,5 @@ Source:
 | Depression   | 20    | 20    | 20     | 20    | 20     | 20    | 20        | 20    |
 
 <a href="http://autorolltables.github.io/hex-map-generator/hex_map_generator.html">
-![image](https://i.imgur.com/SZug4Np.png)
+<img src="https://i.imgur.com/SZug4Np.png">
 </a>
