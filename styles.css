@@ -1,9 +1,40 @@
 
+#canvas {}
+
+body {
+  margin: 0px;
+}
+
+#overlay {
+    /* Height & width depends on how you want to reveal the overlay (see JS below) */
+    height: 100%;
+    width: 100%;
+    position: fixed; /* Stay in place */
+    z-index: 9999999; /* Sit on top */
+    left: 0;
+    top: 0;
+    background-color: rgb(0,0,0); /* Black fallback color */
+    background-color: rgba(0,0,0, 0.3); /* Black w/opacity */
+    overflow-x: hidden; /* Disable horizontal scroll */
+    transition: 0.5s; /* 0.5 second transition effect to slide in or slide down the overlay (height or width, depending on reveal) */
+}
+
+#overlay.hidden {
+  display:none;
+}
+
+.loadimage {
+  align:center;
+  background-color: rgb(0,0,0); /* Black fallback color */
+  background-color: rgba(0,0,0, 0.3); /* Black w/opacity */
+
+}
+
 #iterations {
   width: 60px;
 }
 
-.plains, .scrub, .forest, .rough, .desert, .hills, .mountains, .marsh {
+.plains, .scrub, .forest, .rough, .desert, .hills, .mountains, .marsh, .pond, .depression {
   width: 30px;
 }
 
@@ -13,16 +44,24 @@
 .scrub:before {content:"S";}
 .forest {background-color:#338e29; text-align:center; padding: 15px 10px;}
 .forest:before {content:"F";}
-.rough {background-color:#8e6429; text-align:center; padding: 15px 10px;}
+.rough {background-color:#9e6429; text-align:center; padding: 15px 10px;}
 .rough:before {content:"R";}
 .desert {background-color:#fcf68d; text-align:center; padding: 15px 10px;}
 .desert:before {content:"D";}
 .hills {background-color:#2f774d; text-align:center; padding: 15px 10px;}
 .hills:before {content:"H";}
-.mountains {background-color:#7e7f7e; text-align:center; padding: 15px 10px;}
+.mountains {background-color:#9e9f9e; text-align:center; padding: 15px 10px;}
 .mountains:before {content:"Mo";}
 .marsh {background-color:#a5d8a0; text-align:center; padding: 15px 10px;}
 .marsh:before {content:"Ma";}
+.pond {background-color:#3399ff; text-align:center; padding: 15px 10px;}
+.pond:before {content:"Ma";}
+.depression {background-color:#7e7f7e; text-align:center; padding: 15px 10px;}
+.depression:before {content:"Ma";}
+
+.toolbar {
+  display:none;
+}
 
 .radio {
   border: 2px solid #4CAF50;

@@ -4,7 +4,11 @@
   <link href="styles.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
+<!-- onLoad="document.getElementById('overlay').style.display = 'none';" -->
+<!-- <div id="overlay">
+</div> -->
 
+<div class="toolbar">
   <div class="button" id="random">Random Map</div>
   <div class="button" id="iterative">Iterative Map</div>
   <label class="label">Number of Iterations:</label>
@@ -12,8 +16,8 @@
   <label class="label">Overwrite Hexes:</label>
   <div class="radio" id="overwrite"></div>
   <div class="button" id="key">?</div>
-
-<br>
+  <br>
+</div>
 
 <canvas id="canvas" width="1000" height="1000"></canvas>
 
