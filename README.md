@@ -20,5 +20,6 @@ Source:
 | Pond         | 19    | 19    | 19     | 19    | 19     | 18-19 | 19        | 16-19 |
 | Depression   | 20    | 20    | 20     | 20    | 20     | 20    | 20        | 20    |
 
-
+<a href="http://autorolltables.github.io/hex-map-generator/hex_map_generator.html">
 ![image](https://i.imgur.com/SZug4Np.png)
+</a>
