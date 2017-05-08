@@ -4,7 +4,7 @@
   <link href="css/map_generator_styles.css" rel="stylesheet" type="text/css" />
 
   <!-- Online -->
-  <link rel="stylesheet" href="https://bootswatch.com/superhero/bootstrap.min.css">
+  <!-- <link rel="stylesheet" href="https://bootswatch.com/superhero/bootstrap.min.css"> -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
 
   <!-- Offline -->
@@ -14,19 +14,71 @@
 </head>
 <body>
 <!-- onLoad="document.getElementById('overlay').style.display = 'none';" -->
-<!-- <div id="overlay">
-</div> -->
+<!-- <div id="overlay"></div> -->
 
-<div class="toolbar">
-  <div class="button" id="random">Random Map</div>
-  <div class="button" id="iterative">Iterative Map</div>
-  <label class="label">Number of Iterations:</label>
-  <input class="field" aria-describedby="iterations" id="iterations" type="text" />
-  <label class="label">Overwrite Hexes:</label>
-  <div class="radio" id="overwrite"></div>
-  <div class="button" id="key">?</div>
-  <div class="save"></div>
-  <br>
+<div class="toolbar container">
+  <div class="row">
+    <div class="title col-md-12 logo">Region Map Generator&nbsp;&nbsp;&nbsp;<img src="img/d20.png" width="25" height="28"></div>
+  </div>
+  <div class="row">
+    <!-- <div class="button" id="random_map_button">Random Map</div> -->
+    <!-- <div class="button" id="iterative_map_button">Iterative Map</div> -->
+    <div class="button" id="show_key_button">?</div>
+    <!-- <div class="button" id="save_button">Save</div> -->
+    <a class="button" id="save_link">Save</a>
+  </div>
+</div>
+
+<div class="key" id="key">
+  <center>
+  <table class="key_table">
+    <tr>
+      <td>Plains</td>
+      <td><div class="plains"/></td>
+      <td>Scrub</td>
+      <td><div class="scrub"/></td>
+    </tr>
+
+    <tr>
+      <td>Forest</td>
+      <td><div class="forest"/></td>
+      <td>Rough</td>
+      <td><div class="rough"/></td>
+    </tr>
+
+    <tr>
+      <td>Desert</td>
+      <td><div class="desert"/></td>
+      <td>Hills</td>
+      <td><div class="hills"/></td>
+    </tr>
+
+    <tr>
+      <td>Mountains</td>
+      <td><div class="mountains"/></td>
+      <td>Marsh</td>
+      <td><div class="marsh"/></td>
+    </tr>
+
+    <tr>
+      <td>Pond</td>
+      <td><div class="pond"/></td>
+      <td>Depression</td>
+      <td><div class="depression"/></td>
+    </tr>
+
+    <tr>
+      <td colspan=4>
+        <br>
+        <i>Random Map:</i> This generates each tile randomly to a type. (see chart)
+        <br><br>
+        <i>Iterative Map:</i> This generates starting with a single tile and generates across the whole map from tile to tile based on the previous tile generated.  see <a href="https://www.reddit.com/r/DnDBehindTheScreen/comments/4zqe25/stolen_tables_from_gygax/">this</a>
+
+      </td>
+    </tr>
+
+  </table>
+  </center>
 </div>
 
 <canvas id="canvas" width="1000" height="1000"></canvas>
@@ -36,17 +88,18 @@
 <!--                        SCRIPTS                           -->
 <!-- //////////////////////////////////////////////////////// -->
 
-<script src="js/ocanvas-2.8.7.min.js"></script>
-<!-- <script src="http://cdnjs.cloudflare.com/ajax/libs/ocanvas/2.8.7/ocanvas.min.js"></script> -->
-<script src="js/map_generator.js"></script>
 
 <!-- Offline -->
+<!-- <script src="js/ocanvas-2.8.7.min.js"></script> -->
 <!-- <script src="offline/jquery.min.js"></script> -->
 <!-- <script src="offline/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script> -->
 
 <!-- Online -->
+<script src="http://cdnjs.cloudflare.com/ajax/libs/ocanvas/2.8.7/ocanvas.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+
+<script src="js/map_generator.js"></script>
 
 
 </body>

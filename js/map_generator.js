@@ -441,12 +441,21 @@ function log(msg) {
 /*  Init / Runtime
 /****************************/
 
+function save_as_image(link) {
+	// var image = document.getElementById('canvas').toDataURL("image/png").replace("image/png", "image/octet-stream");  // here is the most important part because if you dont replace you will get a DOM 18 exception.
+	// window.location.href = image; // it will save locally
 
-// canvas.addChild(button);
+	link.href = document.getElementById('canvas').toDataURL();
+	link.download = "region-map.png";
 
-function save_as_image() {
-	var image = canvas.toDataURL("image/png").replace("image/png", "image/octet-stream");  // here is the most important part because if you dont replace you will get a DOM 18 exception.
-	window.location.href=image; // it will save locally
+}
+
+function show_key() {
+	$('#key').show();
+}
+
+function hide_key() {
+	$('#key').hide();
 }
 
 var dragOptions = { changeZindex: true };
@@ -454,6 +463,18 @@ canvas.setLoop(function () {});
 
 draw_iterative_map();
 // draw_random_map();
+
+/****************************/
+/*  Events
+/****************************/
+
+$('body').on('click', '#random_map_button', function() { canvas.clear(); draw_random_map(); });
+$('body').on('click', '#iterative_map_button', function() { canvas.clear(); draw_iterative_map(); });
+$('body').on('click', '#save_link', function() { save_as_image(this); });
+$('body').on('click', '#show_key_button', function() { show_key(); });
+$('body').on('click', '#key', function() { hide_key(); });
+
+
 
 // button.bind("click tap", function () {
 // 	if (canvas.timeline.running) {

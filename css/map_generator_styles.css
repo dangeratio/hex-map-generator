@@ -3,6 +3,33 @@
 
 body {
   margin: 0px;
+  background-color: #505050;
+  color: white;
+}
+
+img {
+  vertical-align: middle;
+}
+
+.button {
+  cursor: pointer;
+}
+
+#save_link {
+  text-decoration: none;
+}
+
+.key {
+  margin-left: 3em;
+  display:none;
+  width:150px;
+  z-index: 999999;
+  position: absolute;
+}
+
+.key, .key table {
+  background-color: grey;
+  border: solid 1px white;
 }
 
 #iterations {
@@ -13,29 +40,40 @@ body {
   width: 30px;
 }
 
-.plains {background:#ddd254; text-align:center; padding: 15px 10px;}
+.plains {background:#ddd254; text-align:center; padding: 15px 10px; color: black; border: solid 1px white;}
 .plains:before {content:"P";}
-.scrub {background-color:#afa642; text-align:center; padding: 15px 10px;}
+.scrub {background-color:#afa642; text-align:center; padding: 15px 10px; color: black; border: solid 1px white;}
 .scrub:before {content:"S";}
-.forest {background-color:#338e29; text-align:center; padding: 15px 10px;}
+.forest {background-color:#338e29; text-align:center; padding: 15px 10px; color: black; border: solid 1px white;}
 .forest:before {content:"F";}
-.rough {background-color:#9e6429; text-align:center; padding: 15px 10px;}
+.rough {background-color:#9e6429; text-align:center; padding: 15px 10px; color: black; border: solid 1px white;}
 .rough:before {content:"R";}
-.desert {background-color:#fcf68d; text-align:center; padding: 15px 10px;}
+.desert {background-color:#fcf68d; text-align:center; padding: 15px 10px; color: black; border: solid 1px white;}
 .desert:before {content:"D";}
-.hills {background-color:#2f774d; text-align:center; padding: 15px 10px;}
+.hills {background-color:#2f774d; text-align:center; padding: 15px 10px; color: black; border: solid 1px white;}
 .hills:before {content:"H";}
-.mountains {background-color:#9e9f9e; text-align:center; padding: 15px 10px;}
+.mountains {background-color:#9e9f9e; text-align:center; padding: 15px 10px; color: black; border: solid 1px white;}
 .mountains:before {content:"Mo";}
-.marsh {background-color:#a5d8a0; text-align:center; padding: 15px 10px;}
+.marsh {background-color:#a5d8a0; text-align:center; padding: 15px 10px; color: black; border: solid 1px white;}
 .marsh:before {content:"Ma";}
-.pond {background-color:#3399ff; text-align:center; padding: 15px 10px;}
+.pond {background-color:#3399ff; text-align:center; padding: 15px 10px; color: black; border: solid 1px white;}
 .pond:before {content:"Ma";}
-.depression {background-color:#7e7f7e; text-align:center; padding: 15px 10px;}
+.depression {background-color:#7e7f7e; text-align:center; padding: 15px 10px; color: black; border: solid 1px white;}
 .depression:before {content:"Ma";}
 
 .toolbar {
-  display:none;
+  display:block;
+  margin: 10px;
+}
+
+.title {
+  font-family: Helvetica Neue, Helvetica, sans-serif !important;
+  font-size: 1em;
+  padding-right: 10px;
+
+  vertical-align: middle;
+  line-height: 20px;
+  height: 50px;
 }
 
 .radio {
