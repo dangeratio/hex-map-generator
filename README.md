@@ -21,4 +21,4 @@ Source:
 | Depression   | 20    | 20    | 20     | 20    | 20     | 20    | 20        | 20    |
 
 
-![image](https://i.imgur.com/YDnmEzb.png)
+![image](https://i.imgur.com/SZug4Np.png)
