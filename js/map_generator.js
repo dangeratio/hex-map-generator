@@ -447,15 +447,36 @@ function save_as_image(link) {
 
 	link.href = document.getElementById('canvas').toDataURL();
 	link.download = "region-map.png";
+	link.blur();
 
 }
 
-function show_key() {
-	$('#key').show();
+function toggle_key(e) {
+  if ($('#key').filter(":visible").length) {
+    $('#key').hide();
+  } else {
+		$('#key').css({top: e.pageY, left: e.pageX-27})
+    $('#key').show();
+		$('body').one('click',function() { hide_key(); });
+  }
 }
 
 function hide_key() {
 	$('#key').hide();
+}
+
+function hide_menu() {
+	$('#index-menu').hide();
+}
+
+function toggle_menu(e) {
+  if ($('#index-menu').filter(":visible").length) {
+    $('#index-menu').hide();
+  } else {
+		$('#index-menu').css({top: e.pageY, left: e.pageX-27})
+    $('#index-menu').show();
+		$('body').one('click',function() { hide_menu(); });
+  }
 }
 
 var dragOptions = { changeZindex: true };
@@ -471,9 +492,14 @@ draw_iterative_map();
 $('body').on('click', '#random_map_button', function() { canvas.clear(); draw_random_map(); });
 $('body').on('click', '#iterative_map_button', function() { canvas.clear(); draw_iterative_map(); });
 $('body').on('click', '#save_link', function() { save_as_image(this); });
-$('body').on('click', '#show_key_button', function() { show_key(); });
-$('body').on('click', '#key', function() { hide_key(); });
+$('body').on('click', '#show_key_button', function(e) { toggle_key(e); });
+$('body').on('click', '#key', function(e) { toggle_key(e); });
+$('body').on('click', '#reload', function() { window.location.reload(); });
 
+// top menu
+$('body').on('click', '.menu-button', function(e) { toggle_menu(e); } );
+$('body').on('click', '#menu-auto-roll-tables', function() { window.location.replace("../index.html"); } );
+$('body').on('click', '#menu-region-map-generator', function() { window.location.replace("hex_map_generator.html"); } );
 
 
 // button.bind("click tap", function () {
